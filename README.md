@@ -28,6 +28,8 @@ issues related to multiple workers.
 
 Without `--preload`, multiple workers will cause the cronjob to be executed on each worker.
 
+On Mac, use `export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES` to [avoid fork issue](https://stackoverflow.com/questions/50168647/multiprocessing-causes-python-to-crash-and-gives-an-error-may-have-been-in-progr).
+
 ## Development
 
 Same as [Usage](#usage) but use `flask --app src/app.py --debug run` instead to
