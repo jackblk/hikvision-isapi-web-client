@@ -9,6 +9,19 @@ Only supports controlling Access Control device right now. Feel free to contribu
 Can schedule with [APScheduler](https://apscheduler.readthedocs.io/). By default it will
 lock the door 1 at 18:00 everyday.
 
+## Docker usage
+
+Setup `.env` file from template `.env.example` and run:
+
+```shell
+docker run --rm \
+    --env-file ./.env \
+    -p 5000:5000 \
+    -it ghcr.io/jackblk/hikvision-isapi-web-client:latest
+```
+
+Access server at <http://localhost:5000/>
+
 ## Usage
 
 * Clone repo
@@ -36,3 +49,11 @@ Same as [Usage](#usage) but use `flask --app src/app.py --debug run` instead to
 watch for changes & auto reload.
 
 Access the dev server at <http://localhost:5000>
+
+Docker build:
+
+```shell
+docker build --rm \
+    -t ghcr.io/jackblk/hikvision-isapi-web-client:latest \
+    .
+```
