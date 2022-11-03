@@ -2,3 +2,4 @@ flask
 Flask-APScheduler
 gunicorn
 requests
+python-dotenv
