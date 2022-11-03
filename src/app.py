@@ -1,8 +1,10 @@
 import logging
 import os
+from datetime import datetime
 
 from dotenv import load_dotenv
 from flask import Flask, render_template, request
+from flask_apscheduler import APScheduler
 
 from hikvision_isapi_client.client import HikvisionClient
 
@@ -12,6 +14,10 @@ app = Flask(__name__)
 gunicorn_error_logger = logging.getLogger("gunicorn.error")
 app.logger.setLevel(os.getenv("LOG_LEVEL", logging.INFO))
 app.logger.handlers.extend(gunicorn_error_logger.handlers)
+scheduler = APScheduler()
+# scheduler.api_enabled = True
+scheduler.init_app(app)
+scheduler.start()
 
 hikvision_client = HikvisionClient(
     base_url=os.getenv("HIK_URL", ""),
@@ -52,5 +58,17 @@ def door_control(door_id):
     }, res.status_code
 
 
+# Close the door at 18:00 everyday
+# Lesser fields default to their minimum values (0)
+# https://apscheduler.readthedocs.io/en/3.x/modules/triggers/cron.html#module-apscheduler.triggers.cron
+@scheduler.task("cron", id="close_door", hour=18)
+def job_close_door():
+    res = hikvision_client.remote_control_door(door_id="1", command="close")
+    app.logger.info(
+        f"[Cronjob] DOOR CLOSE - status: {res.status_code}",
+    )
+
+
 if __name__ == "__main__":
     app.run()
+    scheduler.start()

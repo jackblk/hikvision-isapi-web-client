@@ -21,9 +21,13 @@ class HikvisionClient:
                 "Vars not configured correctly. "
                 f"Base URL: {base_url}, username: {username}, password: {password}."
             )
-        self.auth = HTTPDigestAuth(username=username, password=password)
+        self.username = username
+        self.password = password
         self.base_url = base_url.strip("/")
         self.headers_template = {""}
+
+    def _generate_auth(self) -> HTTPDigestAuth:
+        return HTTPDigestAuth(username=self.username, password=self.password)
 
     def request(
         self,
@@ -41,7 +45,7 @@ class HikvisionClient:
         res = requests.request(
             method=method,
             headers=headers,
-            auth=self.auth,
+            auth=self._generate_auth(),
             url=url,
             data=data,
             json=json,
@@ -87,5 +91,12 @@ class HikvisionClient:
         )
         self.logger.debug(
             f"Remote control res: {res.status_code} | {res.headers} | {res.text}"
+        )
+        return res
+
+    def get_door_security_module_status_capabilities(self):
+        res = self.request(
+            method="GET",
+            path="/ISAPI/AccessControl/RemoteControl/door/capabilities",
         )
         return res
