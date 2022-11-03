@@ -18,9 +18,15 @@ dependencies: `pip install -r requirements.txt`
 * Run server: `flask --app src/app.py run`
 * Access server at <http://localhost:5000/>
 
-**WSGI servers like Gunicorn is NOT supported**, can only run via single worker Flask.
+### Use with WSGI
 
-Multiple workers will cause the cronjob to be executed on each worker.
+**WSGI servers like Gunicorn is NOT FULLY supported** since there might be unforeseen
+issues related to multiple workers.
+
+* Run server: `gunicorn --preload --chdir ./src 'app:app'`
+* Access server at <http://localhost:8000/>
+
+Without `--preload`, multiple workers will cause the cronjob to be executed on each worker.
 
 ## Development
 

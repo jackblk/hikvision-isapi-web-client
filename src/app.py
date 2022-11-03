@@ -71,4 +71,3 @@ def job_close_door():
 
 if __name__ == "__main__":
     app.run()
-    scheduler.start()
