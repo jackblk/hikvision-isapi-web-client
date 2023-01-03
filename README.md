@@ -6,8 +6,7 @@ Web client to remote control compatible HIKVISION devices via ISAPI
 
 Only supports controlling Access Control device right now. Feel free to contribute.
 
-Can schedule with [APScheduler](https://apscheduler.readthedocs.io/). By default it will
-lock the door 1 at 18:00 everyday.
+Can schedule with [APScheduler](https://apscheduler.readthedocs.io/). Check [app.py](src/app.py) for example.
 
 ## Docker usage
 

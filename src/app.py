@@ -61,7 +61,9 @@ def door_control(door_id):
 # Close the door at 18:00 everyday
 # Lesser fields default to their minimum values (0)
 # https://apscheduler.readthedocs.io/en/3.x/modules/triggers/cron.html#module-apscheduler.triggers.cron
-@scheduler.task("cron", id="close_door", hour=18)
+# @scheduler.task("cron", id="close_door", hour=18)
+
+
 def job_close_door():
     res = hikvision_client.remote_control_door(door_id="1", command="close")
     app.logger.info(
