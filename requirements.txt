@@ -1,5 +1,5 @@
 flask
 Flask-APScheduler
 gunicorn
-requests
+hikvision-isapi-py
 python-dotenv

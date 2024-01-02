@@ -5,8 +5,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 from flask import Flask, render_template, request
 from flask_apscheduler import APScheduler
-
-from hikvision_isapi_client.client import HikvisionClient
+from hikvision_isapi import HikvisionClient
 
 load_dotenv()
 
