@@ -17,12 +17,20 @@
 
     <form id="form-submit" doorId="{{door_id}}">
       <p>
-        <input type="submit" class="btn btn-lg btn-success" cmd="open" value="Open"></input>
-        <input type="submit" class="btn btn-lg btn-primary" cmd="alwaysOpen" value="Always Open"></input>
-        <br>
-        <br>
-        <input type="submit" class="btn btn-lg btn-warning" cmd="close" value="Close"></input>
-        <!-- <input type="submit" class="btn btn-lg btn-danger" cmd="alwaysClose" value="Always Close"></input> -->
+        {% if require_authkey %}
+      <div class="row g-3 align-items-center">
+        <div class="col-auto">
+          <input type="password" class="form-control form-control-lg" id="authkey" placeholder="Authentication key">
+        </div>
+      </div>
+      <br>
+      {% endif %}
+      <input type="submit" class="btn btn-lg btn-success" cmd="open" value="Open"></input>
+      <input type="submit" class="btn btn-lg btn-primary" cmd="alwaysOpen" value="Always Open"></input>
+      <br>
+      <br>
+      <input type="submit" class="btn btn-lg btn-warning" cmd="close" value="Close"></input>
+      <!-- <input type="submit" class="btn btn-lg btn-danger" cmd="alwaysClose" value="Always Close"></input> -->
       </p>
     </form>
   </div>

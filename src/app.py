@@ -9,6 +9,8 @@ from hikvision_isapi import HikvisionClient
 
 load_dotenv()
 
+REQUIRE_AUTHKEY = os.getenv("REQUIRE_AUTHKEY", "").lower() == "true"
+
 app = Flask(__name__)
 gunicorn_error_logger = logging.getLogger("gunicorn.error")
 app.logger.setLevel(os.getenv("LOG_LEVEL", logging.INFO))
@@ -29,7 +31,9 @@ app.logger.info(f"App is setup with base URL {hikvision_client.base_url}")
 @app.route("/")
 def main():
     # TODO: fetch door list from server, hardcoding door #1 for now
-    return render_template("door.html", door_list=range(1, 2))
+    return render_template(
+        "door.html", door_list=range(1, 2), require_authkey=REQUIRE_AUTHKEY
+    )
 
 
 @app.route("/door/<string:door_id>", methods=["POST"])

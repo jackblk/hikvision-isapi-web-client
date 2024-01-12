@@ -2,9 +2,14 @@ document.querySelectorAll("#form-submit").forEach((elem) => {
   elem.addEventListener("submit", (e) => {
     e.preventDefault();
     console.log(e);
-    postData(`/door/${e.target.getAttribute("doorId") || 1}`, {
-      command: e.submitter.getAttribute("cmd"),
-    })
+    let authkeyEl = document.getElementById("authkey");
+    postData(
+      `/door/${e.target.getAttribute("doorId") || 1}`,
+      {
+        command: e.submitter.getAttribute("cmd"),
+      },
+      authkeyEl ? authkeyEl.value : ""
+    )
       .then((data) => {
         console.log(data);
         let title = "Success";
@@ -34,7 +39,7 @@ function toast(title, body) {
   toast.show();
 }
 
-async function postData(url = "", data = {}) {
+async function postData(url = "", data = {}, authkey = "") {
   // Default options are marked with *
   const response = await fetch(url, {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -44,6 +49,7 @@ async function postData(url = "", data = {}) {
     headers: {
       "Content-Type": "application/json",
       // 'Content-Type': 'application/x-www-form-urlencoded',
+      "X-Auth-Key": authkey,
     },
     redirect: "follow", // manual, *follow, error
     referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
