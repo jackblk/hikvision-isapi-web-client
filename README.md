@@ -16,6 +16,7 @@ Setup `.env` file from template `.env.example` and run:
 docker run --rm \
     --env-file ./.env \
     -p 5000:5000 \
+    -e VERIFY_SSL=true \
     -it ghcr.io/jackblk/hikvision-isapi-web-client:latest
 ```
 
@@ -29,6 +30,10 @@ dependencies: `pip install -r requirements.txt`
 * Copy `.env.example` to `.env` file, fill in credentials
 * Run server: `flask --app src/app.py run`
 * Access server at <http://localhost:5000/>
+
+### Environment variables
+
+* `VERIFY_SSL`: Any value that's not `true` will ignore the SSL validation. Default: `true`.
 
 ### Use with WSGI
 
