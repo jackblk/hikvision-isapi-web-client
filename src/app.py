@@ -9,7 +9,8 @@ from hikvision_isapi import HikvisionClient
 
 load_dotenv()
 
-REQUIRE_AUTHKEY = os.getenv("REQUIRE_AUTHKEY", "").lower() == "true"
+AUTH_KEY = os.getenv("AUTH_KEY", "")
+REQUIRE_AUTHKEY = bool(AUTH_KEY)
 
 app = Flask(__name__)
 gunicorn_error_logger = logging.getLogger("gunicorn.error")
@@ -39,6 +40,14 @@ def main():
 @app.route("/door/<string:door_id>", methods=["POST"])
 def door_control(door_id):
     json_data = request.json
+    headers = request.headers
+    if REQUIRE_AUTHKEY:
+        authkey = headers.get("X-Auth-Key")
+        if authkey != AUTH_KEY:
+            return {
+                "message": "invalid auth key",
+                "error": "invalid auth key",
+            }, 401
     if json_data is None:
         return {
             "message": "error controling door",

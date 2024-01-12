@@ -34,7 +34,7 @@ dependencies: `pip install -r requirements.txt`
 ### Environment variables
 
 * `VERIFY_SSL`: Any value that's not `true` will ignore the SSL validation. Default: `true`.
-* `REQUIRE_AUTHKEY`: `true` will display AuthKey input. Default: `false`.
+* `AUTH_KEY`: Authentication key to use this GUI. Defaults to empty.
 
 ### Use with WSGI
 
